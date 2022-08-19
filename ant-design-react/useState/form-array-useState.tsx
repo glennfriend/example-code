@@ -53,13 +53,16 @@ export const MyComponent = (props: IProps) => {
         }}
       >
 
+        <Form.Item name="hidden_id" initialValue="100" hidden>
+          <Input/>
+        </Form.Item>
+
         <Form.Item
           name="usePhoneNumber"
           label="Use Phone Number"
           valuePropName="checked"
           initialValue={false}
           rules={[{required: true, message: 'required !'}]}
-          hidden={!formValues?.usePhoneNumber}
         >
           <Checkbox>Enable</Checkbox>
         </Form.Item>
@@ -68,6 +71,10 @@ export const MyComponent = (props: IProps) => {
           name="phoneNumbers"
           label="Phone Number"
           extra="如果要使用 phone number, 請輸入號碼"
+          hidden={!formValues?.usePhoneNumber}                              // 如果上面有勾, 就顯示, 否則穩藏
+          rules={[
+            {required: formValues?.usePhoneNumber, message: 'required !'}   // 如果上面有勾, 就是必填
+          ]}   
         >
           <Input/>
         </Form.Item>
