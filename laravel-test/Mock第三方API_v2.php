@@ -9,7 +9,7 @@ use Mockery;
  */
 class Google
 {
-    public function campaing()
+    public function campaign()
     {
         return new GoogleCampaign();
     }
@@ -28,6 +28,20 @@ class GoogleCampaign
     }
 }
 
+class HelloService
+{
+    public function perform()
+    {
+        // 我們的邏輯, 要測試該程式
+        $google = $this->fetchGoogle();
+        $google->campaign()->addCampaign(); // 會呼叫外部 API
+    }
+    protected function fetchGoogle()        // 包裝 外部程式, 拉一層 method, 寫測試較為容易
+    {
+        return new Google();
+    }
+}
+
 class HelloServiceTest extends TestCase
 {
     /**
@@ -39,12 +53,19 @@ class HelloServiceTest extends TestCase
         $this->mockGoogle()
             ->campaign()
             ->addCampaign(new Campaign());
+
+        $service = $this->initMock(HelloService::class);
+        $service
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods()
+            ->shouldReceive('fetchGoogle')
+            ->andReturn($this->mockGoogle());
     }
 
     private function mockGoogle()
     {
-        $service = $this->initMock(GoogleCampaign::class);
-        $service
+        $campaign = Mockery::mock(GoogleCampaign::class);
+        $campaign
             ->makePartial()
             ->shouldAllowMockingProtectedMethods()
             ->shouldReceive('mutate')
@@ -58,7 +79,7 @@ class HelloServiceTest extends TestCase
 
         $google = $this->initMock(Google::class);
         $google->shouldReceive('campaign')
-            ->andReturn($service);
+            ->andReturn($campaign);
 
         return $google;
     }
