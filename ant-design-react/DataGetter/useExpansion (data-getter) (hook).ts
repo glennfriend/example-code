@@ -85,11 +85,17 @@ export const useExpansion = () => {
 
 
 // private
-const optFailure = (msg?: string) => {
+import { optFailure } from '@onr/shared';
+/*
+export const optSuccess = (msg?: string) => {
+  message.success(msg || 'Operation Successfully Completed!');
+};
+export const optFailure = (msg?: string) => {
   message.error(msg || `Something went wrong. Please refresh or contact the admin.`, 10);
 };
+*/
 
-const tryCatch = <T extends any[], U>(
+export const tryCatch = <T extends any[], U>(
   tryFtn: (...p: T) => Promise<U>,
   setLoading?: (state: boolean) => void,
   catchFtn?: (e?: Error) => void
