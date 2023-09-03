@@ -54,7 +54,7 @@ class HelloServiceTest extends TestCase
             ->campaign()
             ->addCampaign(new Campaign());
 
-        $service = $this->initMock(HelloService::class);
+        $service = $this->mock(HelloService::class);
         $service
             ->makePartial()
             ->shouldAllowMockingProtectedMethods()
@@ -77,15 +77,10 @@ class HelloServiceTest extends TestCase
                 );
             });
 
-        $google = $this->initMock(Google::class);
+        $google = $this->mock(Google::class);
         $google->shouldReceive('campaign')
             ->andReturn($campaign);
 
         return $google;
-    }
-
-    private function initMock(string $className): object
-    {
-        return $this->app->instance($className, Mockery::mock($className));
     }
 }

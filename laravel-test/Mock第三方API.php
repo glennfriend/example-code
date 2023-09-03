@@ -43,20 +43,20 @@ class HelloServiceTest extends TestCase
 
     private function mockGoogle()
     {
-        $service = $this->initMock(GoogleCampaign::class);
+        $service = $this->mock(GoogleCampaign::class);
         $service
             ->makePartial()
             ->shouldAllowMockingProtectedMethods()
             ->shouldReceive('mutate')
             ->once()
-            ->withArgs(function (array $campaign) {
+            ->withArgs(function (array $campaign) { // 呼叫 mutate 時的參數傳入值
                 return (
                        $campaign->getResourceName() === 'customers/1111/campaigns/9999'
                     && $campaign->getId() === 9999
                 );
             });
 
-        $google = $this->initMock(Google::class);
+        $google = $this->mock(Google::class);
         $google->shouldReceive('campaign')
             ->andReturn($service);
 

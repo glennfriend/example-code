@@ -11,7 +11,7 @@ class HelloServiceTest extends TestCase
     public function perform_should_work()
     {
         // mock 主要程式內有使用到的 class
-        $this->initMock(AppendUserDataItemService::class)
+        $this->mock(AppendUserDataItemService::class)
             ->makePartial()
             ->shouldAllowMockingProtectedMethods()
             ->shouldReceive('append')
@@ -23,10 +23,5 @@ class HelloServiceTest extends TestCase
         // 主要的程式
         $this->service = Mockery::mock(HelloService::class)->makePartial();
         $this->service->perform();
-    }
-
-    private function initMock(string $className): object
-    {
-        return $this->app->instance($className, Mockery::mock($className));
     }
 }
