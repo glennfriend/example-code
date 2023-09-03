@@ -1,10 +1,21 @@
 import React from 'react';
-import {Form, Select} from 'antd';
-import {FormInstance} from "antd/lib/form";
+import { Form, Select } from 'antd';
+import { FormInstance } from "antd/lib/form";
+import { DefaultOptionType } from 'rc-select/lib/Select';
 
 interface IFormSectionProps {
     form: FormInstance;
 }
+
+// filter 是只留下條件成立的
+const userOptions: DefaultOptionType[] = allUsers
+    ?.filter(item => item.id !== user.id)
+    ?.filter(item => item.status === 'enabled' || item.status === 'disabled')
+    .map((item: { id: number; name: string }) => ({
+        value: item.id,
+        label: `${item.name} (${item.id})`,
+}));
+
 
 export const HelloFormSection: React.FC<IFormSectionProps> = () => {
 
@@ -20,11 +31,22 @@ export const HelloFormSection: React.FC<IFormSectionProps> = () => {
             showSearch
             filterOption={(input, option) => {
                 const customOption = option as any;
-                return customOption?.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;     // 在 label 中搜尋
+                return       customOption?.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;     // 在 label 中搜尋
+                // return `${customOption?.key}`.toLowerCase().includes(input.toLowerCase());
             }}
-            options={null}
+            options={userOptions}
             loading={false}
+            // value={selectedTrigger}  // Form.Item 不能用 value, value 是給 useState 使用的
         />
     </Form.Item>
-
 };
+
+return (
+    <div>
+        {getFieldDecorator('user.blogs', {
+            initialValue: [],
+        })(
+            <Select mode="multiple" />,
+        )}
+    </div>
+);
