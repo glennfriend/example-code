@@ -16,4 +16,10 @@ class HelloWorldBuyFailException extends Exception
         }
         parent::__construct($message, $code, $previous);
     }
+
+    // 如果要自行擴充欄位, 也許可以用 value object ??
+    public function getTitle(): string
+    {
+        return "Buy the product is fail !";
+    }
 }

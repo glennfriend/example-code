@@ -6,7 +6,7 @@ namespace Modules\Aaa\Services;
 
 use Exception;
 
-class AaaExceptionCause
+class AaaExceptionCause  // or AaaExceptionHandler ?
 {
     private static Exception $exception;
 

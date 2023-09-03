@@ -23,6 +23,17 @@ class HelloConsole extends Command
 
     public function handle()
     {
+        $this->demo();
+        $this->es_query();
+        $this->quick_entities();
+    }
+
+    private function demo(): void
+    {
+    }
+
+    private function es_query(): void
+    {
         $segmentId = 3;
         $repository = app(SegmentRepository::class);
         $segment = $repository->find($segmentId);
@@ -31,5 +42,11 @@ class HelloConsole extends Command
         $esQuery = $builder->build($segment);
 
         dump($esQuery);
+    }
+
+    private function quick_entities(): void
+    {
+        $account = Account::factory()->make();
+        dd($account->toArray());
     }
 }

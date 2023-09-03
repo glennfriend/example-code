@@ -1,0 +1,8 @@
+docker-compose exec php php artisan module:make-rule {rule_class} {module_name}
+docker-compose exec php php artisan module:make-rule E164PhoneNumberRule Contact
+
+Eddie:
+    建議後面要加 Rule
+    因為domain object (entity, value object)會比rule更常被使用
+    如果沒有postfix, 就會經常需要使用alias imports
+

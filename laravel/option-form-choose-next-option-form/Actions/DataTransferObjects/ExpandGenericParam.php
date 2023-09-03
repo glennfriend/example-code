@@ -43,4 +43,17 @@ class ExpandGenericParam implements ActionParam
             throw new Exception("seedCampaignIds not found");
         }
     }
+
+
+
+    public function createFromAccount(Account $account)
+    {
+        // Eddie: DTO 這麼做是合理的
+        return self::create([
+            'xxx' => $account->xxx,
+            'xxx' => $account->xxx,
+            'xxx' => $account->xxx,
+        ]);
+
+    }
 }
