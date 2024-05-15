@@ -39,7 +39,7 @@ class MigrateContactCustomToAVA extends Command
     private int $affectedNumber = 0;
 
     public function __construct(
-        readonly private AvaAppIntegrationRepository $avaAppIntegrationRepository,
+        private readonly AvaAppIntegrationRepository $avaAppIntegrationRepository,
     )
     {
         ini_set('memory_limit', '512M');

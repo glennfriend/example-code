@@ -4,7 +4,7 @@ namespace Modules\Account\AttributeCastors;
 
 use InvalidArgumentException;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Modules\Account\ValueObjects\AccountConfig;
+use Modules\Account\ValueObjects\AccountConfiguration;
 use Modules\Account\Entities\Account;
 
 class AccountConfigCastor implements CastsAttributes
@@ -19,7 +19,7 @@ class AccountConfigCastor implements CastsAttributes
     {
         $data = json_decode((string) data_get($attributes, 'config') ?? '{}', true);
 
-        return new AccountConfig($data);
+        return new AccountConfiguration($data);
     }
 
     /**

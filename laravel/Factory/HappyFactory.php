@@ -56,4 +56,38 @@ class HappyFactory extends Factory
 
         return $this->for($account);
     }
+
+    public function withDoNotCall(): static
+    {
+        $default = [
+            'publisher' => ['transfer_number' => $this->faker->e164PhoneNumber()],
+            'dnc' => 1,
+            'purchased' => 1,
+        ];
+
+        return $this->state(function (array $attributes) use ($default) {
+            return array_merge($attributes, ['custom' => $default]);
+        });
+    }
+
+    /**
+     * 保留原本的 config setting, 並且 append new config setting
+     */
+    public function withPhoneVerification(): static
+    {
+        return $this->afterMaking(function (Account $account) {
+            $config = [
+                'verifications' => [
+                    [
+                        'path' => 'phone',
+                        'type' => 'phone',
+                        'entity' => 'contact',
+                    ],
+                ],
+            ];
+            $config = array_merge_recursive($account->config->toArray(), $config);
+            $account->config = new AccountConfiguration($config);
+        });
+    }
+
 }

@@ -10,11 +10,26 @@ use OnrampLab\CleanArchitecture\UseCase;
  */
 class IgnoreContactLastNameUseCase extends UseCase
 {
+    /*
+        #[UnsignedInteger]
+        public int $accountId;
+
+        #[BooleanType]
+        public bool $isSandbox;
+
+        #[ArrayType]
+        public array $dateRange;
+
+        #[ArrayType, Nullable]
+        public array $reportGroups;
+    */
+
     public string $lastName;
 
     public function handle(): bool
     {
         if (strtolower(trim($this->lastName)) === 'aacsdqa') {
+            // to log
             return true;
         }
 

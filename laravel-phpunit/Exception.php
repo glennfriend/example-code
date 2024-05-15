@@ -10,6 +10,7 @@ class HelloServiceTest extends TestCase
     public function birth_format_should_not_work()
     {
         $this->expectException(Exception::class);
+        $this->expectExceptionCode(409);
         $this->expectExceptionMessage("Birth string format validation failed !");
         $this->expectExceptionMessageRegExp('/Birth string format validation failed$/');
 
